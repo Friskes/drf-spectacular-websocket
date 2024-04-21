@@ -1,0 +1,14 @@
+*.pyc
+*.db
+*~
+.*
+
+build/
+dist/
+venv/
+*.egg-info/
+
+!.gitignore
+
+__pycache__
+.git

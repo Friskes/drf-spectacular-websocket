@@ -1,0 +1,5 @@
+include README.md
+include LICENSE
+recursive-include drf_spectacular_websocket/templates swagger_ui.js
+global-exclude __pycache__
+global-exclude *.py[co]
