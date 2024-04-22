@@ -1,7 +1,7 @@
 # Extend schema decorator for Channels
 
 
-> Provides [extend_ws_schema](https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication) decorator to documentation [Cunsumer](https://channels.readthedocs.io/en/latest/topics/consumers.html) methods from [channels](https://github.com/django/channels) just like it does [drf-spectacular](https://github.com/tfranzel/drf-spectacular)
+> Provides [extend_ws_schema](#About-decorator) decorator to documentation [Cunsumer](https://channels.readthedocs.io/en/latest/topics/consumers.html) methods from [channels](https://github.com/django/channels) just like it does [drf-spectacular](https://github.com/tfranzel/drf-spectacular)
 
 
 ## Requirements
