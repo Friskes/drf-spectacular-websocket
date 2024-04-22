@@ -39,7 +39,7 @@ SPECTACULAR_SETTINGS = {
     'SWAGGER_UI_SETTINGS': {
         'connectSocket': True,  # Automatically establish a WS connection when opening swagger
         'socketMaxMessages': 8,  # Max number of messages displayed in the log window in swagger
-        'socketMessagesInitialOpened': True,  # Automatically open the log window when opening swagger
+        'socketMessagesInitialOpened': False,  # Automatically open the log window when opening swagger
     },
 }
 
