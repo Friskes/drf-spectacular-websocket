@@ -69,7 +69,7 @@ class WsSchemaGenerator(SchemaGenerator):
             try:
                 consumer_endpoints[name] = {
                     action_schema.method == 'receive' and 'get' or 'post': {
-                        'operationId': action_schema.get_operation_id(),
+                        'operationId': f'{event}_{action_schema.get_operation_id()}',
                         'requestBody': action_schema.get_request_body(
                             serializer=action_schema.get_request_serializer(),
                             method=action_schema.method,
