@@ -16,15 +16,11 @@ jobs:
       with:
         python-version: "3.x"
     - name: Install pypa/build
-    #   run: >-
-    #     python3 -m
-    #     pip install
-    #     build
-    #     --user
       run: >-
         python3 -m
         pip install
-        -r requirements/packaging.txt
+        build
+        --user
     - name: Build a binary wheel and a source tarball
     #   run: python3 -m build
       run: python3 -m setup.py sdist bdist_wheel
