@@ -11,7 +11,7 @@ with open("requirements/base.txt") as fh:
 
 setup(
     name="drf_spectacular_websocket",
-    version="1.0.0",
+    version="1.0.1",
     description="Extend schema decorator for Channels",
     long_description=long_description,
     long_description_content_type="text/markdown",
