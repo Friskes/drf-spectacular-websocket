@@ -23,7 +23,6 @@ jobs:
         --user
     - name: Build a binary wheel and a source tarball
       run: python3 -m build
-      # run: python3 -m setup.py sdist bdist_wheel
     - name: Store the distribution packages
       uses: actions/upload-artifact@v3
       with:
@@ -41,7 +40,7 @@ jobs:
       name: pypi
       url: https://pypi.org/p/drf-spectacular-websocket
     permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      id-token: write
 
     steps:
     - name: Download all the dists
@@ -61,8 +60,8 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # IMPORTANT: mandatory for making GitHub Releases
-      id-token: write  # IMPORTANT: mandatory for sigstore
+      contents: write
+      id-token: write
 
     steps:
     - name: Download all the dists
@@ -87,34 +86,31 @@ jobs:
     - name: Upload artifact signatures to GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
-      # Upload to GitHub Release using the `gh` CLI.
-      # `dist/` contains the built packages, and the
-      # sigstore-produced signatures and certificates.
       run: >-
         gh release upload
         '${{ github.ref_name }}' dist/**
         --repo '${{ github.repository }}'
 
-#   publish-to-testpypi:
-#     name: Publish Python 🐍 distribution 📦 to TestPyPI
-#     needs:
-#     - build
-#     runs-on: ubuntu-latest
+  publish-to-testpypi:
+    name: Publish Python 🐍 distribution 📦 to TestPyPI
+    needs:
+    - build
+    runs-on: ubuntu-latest
 
-#     environment:
-#       name: testpypi
-#       url: https://test.pypi.org/p/drf-spectacular-websocket
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/drf-spectacular-websocket
 
-#     permissions:
-#       id-token: write  # IMPORTANT: mandatory for trusted publishing
+    permissions:
+      id-token: write
 
-#     steps:
-#     - name: Download all the dists
-#       uses: actions/download-artifact@v3
-#       with:
-#         name: python-package-distributions
-#         path: dist/
-#     - name: Publish distribution 📦 to TestPyPI
-#       uses: pypa/gh-action-pypi-publish@release/v1
-#       with:
-#         repository-url: https://test.pypi.org/legacy/
+    steps:
+    - name: Download all the dists
+      uses: actions/download-artifact@v3
+      with:
+        name: python-package-distributions
+        path: dist/
+    - name: Publish distribution 📦 to TestPyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://test.pypi.org/legacy/

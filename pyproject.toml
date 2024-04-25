@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drf_spectacular_websocket"
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#version
+# https://packaging.python.org/en/latest/guides/single-sourcing-package-version/#single-sourcing-the-version
+version = "1.0.1"
+license = {file = "LICENSE"}
+authors = [
+  {name="Friskes", email="friskesx@gmail.com"},
+]
+description = "Extend schema decorator for Channels"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "django>=4.2.11",
+    "djangorestframework>=3.14.0",
+    "drf-spectacular>=0.27.2",
+    "drf-spectacular-sidecar>=2024.4.1",
+    "channels>=4.1.0",
+]
+keywords = ["Django", "DRF", "Spectacular", "Swagger", "Channels"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: Django",
+    "Topic :: Internet :: WWW/HTTP",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Friskes/drf-spectacular-websocket"
+"Bug Reports" = "https://github.com/pypa/sampleproject/issues"
+"Source" = "https://github.com/Friskes/drf-spectacular-websocket/"
+
+# https://setuptools.pypa.io/en/latest/userguide/datafiles.html
+# https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#package-data
+# With this, no MANIFEST.in file is required.
+[tool.setuptools.package-data]
+"drf_spectacular_websocket" = ["drf_spectacular_websocket/templates/swagger_ui.js"]
