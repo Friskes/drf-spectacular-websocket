@@ -118,11 +118,7 @@ class SomeConsumer(AsyncJsonWebsocketConsumer):
 ```
 
 ### Send
-<div class="row justify-content-center">
-  <img class="img-fluid text-center" src="![](https://github.com/Friskes/drf-spectacular-websocket/raw/main/images/example_send.png)">
-</div>
+![](images/example_send.png)
 
 ### Receive
-<div class="row justify-content-center">
-  <img class="img-fluid text-center" src="![](https://github.com/Friskes/drf-spectacular-websocket/raw/main/images/example_receive.png)">
-</div>
+![](images/example_receive.png)
