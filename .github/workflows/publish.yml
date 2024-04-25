@@ -22,8 +22,8 @@ jobs:
         build
         --user
     - name: Build a binary wheel and a source tarball
-    #   run: python3 -m build
-      run: python3 -m setup.py sdist bdist_wheel
+      run: python3 -m build
+      # run: python3 -m setup.py sdist bdist_wheel
     - name: Store the distribution packages
       uses: actions/upload-artifact@v3
       with:
