@@ -11,3 +11,4 @@ venv/
 
 __pycache__
 .git
+__publish.yml
