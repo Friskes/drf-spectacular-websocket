@@ -26,7 +26,6 @@ classifiers = [
     "Framework :: Django :: 4.0",
     "Framework :: Django :: 4.1",
     "Framework :: Django :: 4.2",
-    "Framework :: Django :: 5.0",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Documentation",
     "Topic :: Software Development :: Code Generators",
@@ -37,7 +36,7 @@ dependencies = [
     "djangorestframework>=3.14.0",
     "drf-spectacular>=0.27.2",
     "drf-spectacular-sidecar>=2024.4.1",
-    "channels>=4.1.0",
+    "channels>=4.0.0",
 ]
 
 
@@ -47,11 +46,11 @@ dependencies = [
 dev = [
     "pre-commit>=3.5.0",
     "ruff==0.4.1",
-    "pytest>=8.1.1",
+    "pytest>=7.0.1",
 ]
 ci = [
     "ruff==0.4.1",
-    "pytest>=8.1.1",
+    "pytest>=7.0.1",
 ]
 
 

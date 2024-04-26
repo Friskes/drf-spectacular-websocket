@@ -4,14 +4,6 @@
 > Provides [extend_ws_schema](#About-decorator) decorator to documentation [Cunsumer](https://channels.readthedocs.io/en/latest/topics/consumers.html) methods from [channels](https://github.com/django/channels) just like it does [drf-spectacular](https://github.com/tfranzel/drf-spectacular)
 
 
-## Requirements
-- django>=4.2.11
-- djangorestframework>=3.14.0
-- drf-spectacular>=0.27.2
-- drf-spectacular-sidecar>=2024.4.1
-- channels>=4.1.0
-
-
 ## Install
 1. `pip install drf-spectacular-websocket`
 2. `python manage.py collectstatic` for sidecar static
