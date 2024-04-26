@@ -6,7 +6,7 @@ on: push
 
 jobs:
   test:
-    name: build (Platform ${{ matrix.platform }}, Python ${{ matrix.python-version }}, Django ${{ matrix.django-version }})
+    name: Test (💻 ${{ matrix.platform }}, 🐍 ${{ matrix.python-version }}, 🤠 ${{ matrix.django-version }})
     strategy:
       fail-fast: false
       # max-parallel: 5
