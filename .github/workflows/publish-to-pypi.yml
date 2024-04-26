@@ -12,16 +12,12 @@ jobs:
       # max-parallel: 5
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        django-version: ['Django>=3.2,<3.3', 'Django>=4.0,<4.1', 'Django>=4.1,<4.2', 'Django>=4.2,<4.3', 'Django>=5.0,<5.1']
+        django-version: ['Django>=3.2,<3.3', 'Django>=4.0,<4.1', 'Django>=4.1,<4.2', 'Django>=4.2,<4.3']
         platform: [
           ubuntu-latest,
           # macos-latest,
           # windows-latest
         ]
-        exclude:
-          # Django verison >=5.0 is not compatible with Python version <3.10
-          - python-version: '>=3.8,<3.10'
-            django-version: 'Django>=5.0,<5.1'
     runs-on: ${{ matrix.platform }}
     steps:
     - name: Checkout
