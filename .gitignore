@@ -13,3 +13,4 @@ __pycache__
 .git
 trash
 .pytest_cache
+.ruff_cache
