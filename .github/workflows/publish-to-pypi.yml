@@ -20,10 +20,10 @@ jobs:
         ]
         exclude:
           # Django verison >=5.0 is not compatible with Python version <3.10
-          - python-version: '3.8'
-            django-version: '5.0'
-          - python-version: '3.9'
-            django-version: '5.0'
+          - django-version: '5.0'
+            python-version: '3.8'
+          - django-version: '5.0'
+            python-version: '3.9'
     runs-on: ${{ matrix.platform }}
     steps:
     - name: Checkout
