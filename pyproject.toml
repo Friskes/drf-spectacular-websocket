@@ -55,6 +55,10 @@ dev = [
     "ruff==0.4.1",
     "pytest>=8.1.1",
 ]
+ci = [
+    "ruff==0.4.1",
+    "pytest>=8.1.1",
+]
 
 
 [project.urls]

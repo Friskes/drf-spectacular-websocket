@@ -25,7 +25,7 @@ jobs:
 
     - name: Install dependencies with optional
       run: |
-        python -m pip install .[dev]
+        python -m pip install .[ci]
 
     - name: Run lint
       run: |
