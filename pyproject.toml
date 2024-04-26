@@ -56,7 +56,7 @@ ci = [
 
 [project.urls]
 "Homepage" = "https://github.com/Friskes/drf-spectacular-websocket"
-"Bug Reports" = "https://github.com/pypa/sampleproject/issues"
+"Bug Reports" = "https://github.com/Friskes/drf-spectacular-websocket/issues"
 "Source" = "https://github.com/Friskes/drf-spectacular-websocket/"
 
 
