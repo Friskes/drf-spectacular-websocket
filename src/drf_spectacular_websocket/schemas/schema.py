@@ -1,4 +1,6 @@
-from collections.abc import Callable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from channels.routing import URLRouter
 from django.conf import settings
@@ -7,6 +9,9 @@ from django.utils.module_loading import import_string
 from drf_spectacular.generators import SchemaGenerator
 
 from .consumer_schema import NotReadyError
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class WsSchemaGenerator(SchemaGenerator):

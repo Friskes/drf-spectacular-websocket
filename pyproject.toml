@@ -41,17 +41,11 @@ dependencies = [
 ]
 
 
-# pip install .[lint]
-# pip install .[test]
+# pip install .[dev]
+# pip install .[ci]
 [project.optional-dependencies]
-lint = [
-    "ruff==0.4.1",
-]
-test = [
-    "pytest>=8.1.1",
-]
 dev = [
-    "pre-commit==3.7.0",
+    "pre-commit>=3.5.0",
     "ruff==0.4.1",
     "pytest>=8.1.1",
 ]
