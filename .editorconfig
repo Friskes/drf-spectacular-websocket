@@ -1,0 +1,34 @@
+# http://editorconfig.org
+
+# EditorConfig помогает поддерживать согласованные стили кодирования для нескольких разработчиков,
+# работающих над одним проектом в различных редакторах и IDE.
+
+root = true
+
+[*]
+charset = utf-8  # Кодировка файлов по умолчанию
+# end_of_line = lf  # Последовательность конца строки для файлов по умолчанию
+indent_style = space  # Стиль отступов в файлах по умолчанию
+insert_final_newline = true  # Автоматически добавлять пустую строку в конце файла
+trim_trailing_whitespace = true  # Автоматически убирать не используемые пробелы в конце строк
+
+[*.py]
+profile = black
+indent_size = 4
+max_line_length = 105
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.json]
+indent_size = 4
+insert_final_newline = ignore
+
+[*.{html,md}]
+indent_size = 4
+
+[*.md]
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab

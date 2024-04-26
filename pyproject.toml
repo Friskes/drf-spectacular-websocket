@@ -1,26 +1,15 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "drf_spectacular_websocket"
 # https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#version
 # https://packaging.python.org/en/latest/guides/single-sourcing-package-version/#single-sourcing-the-version
-version = "1.2.0"
+version = "1.2.1"
 license = {file = "LICENSE"}
 authors = [
   {name="Friskes", email="friskesx@gmail.com"},
 ]
-description = "Extend schema decorator for Channels"
+description = "Extend websocket schema decorator for Django Channels"
 readme = "README.md"
 requires-python = ">=3.8"
-dependencies = [
-    "django>=4.2.11",
-    "djangorestframework>=3.14.0",
-    "drf-spectacular>=0.27.2",
-    "drf-spectacular-sidecar>=2024.4.1",
-    "channels>=4.1.0",
-]
 keywords = ["Django", "DRF", "Spectacular", "Swagger", "Channels"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -33,17 +22,197 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Framework :: Django",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.0",
+    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
     "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Documentation",
+    "Topic :: Software Development :: Code Generators",
 ]
+# pip install .
+dependencies = [
+    "django>=4.2.11",
+    "djangorestframework>=3.14.0",
+    "drf-spectacular>=0.27.2",
+    "drf-spectacular-sidecar>=2024.4.1",
+    "channels>=4.1.0",
+]
+
+
+# pip install .[lint]
+# pip install .[test]
+[project.optional-dependencies]
+lint = [
+    "ruff==0.4.1",
+]
+test = [
+    "pytest>=8.1.1",
+]
+dev = [
+    "pre-commit==3.7.0",
+    "ruff==0.4.1",
+    "pytest>=8.1.1",
+]
+
 
 [project.urls]
 "Homepage" = "https://github.com/Friskes/drf-spectacular-websocket"
 "Bug Reports" = "https://github.com/pypa/sampleproject/issues"
 "Source" = "https://github.com/Friskes/drf-spectacular-websocket/"
 
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
 # https://setuptools.pypa.io/en/latest/userguide/datafiles.html
 # https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#package-data
-# With this, no MANIFEST.in file is required.
+# Данная настройка позволяет заменить MANIFEST.in файл для добавления дополнительных файлов в пакет
 [tool.setuptools.package-data]
 "drf_spectacular_websocket" = ["drf_spectacular_websocket/templates/swagger_ui.js"]
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = 'test_*.py'
+addopts = [
+    "--strict-config",
+    "--strict-markers",
+]
+xfail_strict = true
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning:typer",
+]
+
+
+# https://docs.astral.sh/ruff/settings/
+# https://docs.astral.sh/ruff/configuration/#full-command-line-interface
+# cmd: ruff format  # Отформатирует все файлы в `.` текущем каталоге.
+[tool.ruff]
+required-version = "==0.4.1"
+target-version = "py312"  # Версия python которую будет обслуживать ruff
+line-length = 105  # Макс длина строки кода после которой будет выполнен автоперенос
+indent-width = 4
+force-exclude = true  # pre-commit файл будет использовать exclude список
+src = ["src"]  # Корень проекта в котором лежат приложения  (необходимо для работы ruff.lint.isort)
+extend-exclude = [
+    "migrations",
+]
+
+
+[tool.ruff.format]
+quote-style = "single"  # Использовать одинарные кавычки при форматировании файла
+indent-style = "space"  # Использовать пробелы вместо табуляции при форматировании файла
+# line-ending = "lf"  # Последовательность конца строки для файлов по умолчанию
+
+
+# https://docs.astral.sh/ruff/linter/
+# cmd: ruff check --fix  # Проверить линтером все файлы в `.` текущем каталоге и исправить все безопасные проблемы.
+[tool.ruff.lint]
+# Настройки по умолчанию: https://docs.astral.sh/ruff/configuration/
+# https://docs.astral.sh/ruff/rules/
+# select по умолчанию: ["E4", "E7", "E9", "F"]
+extend-select = [
+    "E",      # https://docs.astral.sh/ruff/rules/#pycodestyle-e-w
+    "W",      # https://docs.astral.sh/ruff/rules/#pycodestyle-e-w
+    "I",      # https://docs.astral.sh/ruff/rules/#isort-i
+    "N",      # https://docs.astral.sh/ruff/rules/#pep8-naming-n
+    "UP",     # https://docs.astral.sh/ruff/rules/#pyupgrade-up
+    "YTT",    # https://docs.astral.sh/ruff/rules/#flake8-2020-ytt
+    "ASYNC",  # https://docs.astral.sh/ruff/rules/#flake8-async-async
+    "BLE",    # https://docs.astral.sh/ruff/rules/#flake8-blind-except-ble
+    "B",      # https://docs.astral.sh/ruff/rules/#flake8-bugbear-b
+    "A",      # https://docs.astral.sh/ruff/rules/#flake8-builtins-a
+    "COM",    # https://docs.astral.sh/ruff/rules/#flake8-commas-com
+    "C4",     # https://docs.astral.sh/ruff/rules/#flake8-comprehensions-c4
+    "DTZ",    # https://docs.astral.sh/ruff/rules/#flake8-datetimez-dtz
+    "T10",    # https://docs.astral.sh/ruff/rules/#flake8-debugger-t10
+    "DJ",     # https://docs.astral.sh/ruff/rules/#flake8-django-dj
+    "FA",     # https://docs.astral.sh/ruff/rules/#flake8-future-annotations-fa
+    "ISC",    # https://docs.astral.sh/ruff/rules/#flake8-implicit-str-concat-isc
+    "ICN",    # https://docs.astral.sh/ruff/rules/#flake8-import-conventions-icn
+    "G",      # https://docs.astral.sh/ruff/rules/#flake8-logging-format-g
+    "INP",    # https://docs.astral.sh/ruff/rules/#flake8-no-pep420-inp
+    "PIE",    # https://docs.astral.sh/ruff/rules/#flake8-pie-pie
+    "PYI",    # https://docs.astral.sh/ruff/rules/#flake8-pyi-pyi
+    "PT",     # https://docs.astral.sh/ruff/rules/#flake8-pytest-style-pt
+    "Q",      # https://docs.astral.sh/ruff/rules/#flake8-quotes-q
+    "RSE",    # https://docs.astral.sh/ruff/rules/#flake8-raise-rse
+    "RET",    # https://docs.astral.sh/ruff/rules/#flake8-return-ret
+    "SLF",    # https://docs.astral.sh/ruff/rules/#flake8-self-slf
+    "SLOT",   # https://docs.astral.sh/ruff/rules/#flake8-slots-slot
+    "SIM",    # https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
+    "TID",    # https://docs.astral.sh/ruff/rules/#flake8-tidy-imports-tid
+    "TCH",    # https://docs.astral.sh/ruff/rules/#flake8-type-checking-tch
+    "INT",    # https://docs.astral.sh/ruff/rules/#flake8-gettext-int
+    "FLY",    # https://docs.astral.sh/ruff/rules/#flynt-fly
+    "PERF",   # https://docs.astral.sh/ruff/rules/#perflint-perf
+    "LOG",    # https://docs.astral.sh/ruff/rules/#flake8-logging-log
+    "RUF",    # https://docs.astral.sh/ruff/rules/#ruff-specific-rules-ruf
+    #! https://docs.astral.sh/ruff/rules/#refurb-furb
+    #! "FURB",  # refurb  (пока что не стабильно 29.03.2024)
+]
+ignore = [
+    # https://docs.astral.sh/ruff/rules/#pyflakes-f
+    "F401",    # (не ругаться на неиспользуемые импорты)
+    "F841",    # (не ругаться на неиспользуемые переменные)
+    "F403",    # (не ругаться на использование from ... import *)
+    # https://docs.astral.sh/ruff/rules/#pyupgrade-up
+    "UP031",   # (не ругаться на форматирование с помощью %s)
+    # https://docs.astral.sh/ruff/rules/#flake8-logging-format-g
+    "G004",    # (не ругаться на использование f-строк для сообщения лога)
+    # https://docs.astral.sh/ruff/rules/#ruff-specific-rules-ruf
+    "RUF001",  # (не ругаться на кириллицу в строках)
+    "RUF002",  # (не ругаться на кириллицу в докстрингах)
+    "RUF003",  # (не ругаться на кириллицу в комментариях)
+    "RUF012",  # (не ругаться на мутабельность коллекций)
+    # https://docs.astral.sh/ruff/rules/#flake8-pytest-style-pt
+    "PT009",   # (не ругаться на unittest ассерты)
+    "PT027",   # (не ругаться на unittest ассерты)
+    "PT001",   # (не ругаться на отсутствие круглых скобок у декоратора fixture)
+    # https://docs.astral.sh/ruff/rules/#flake8-implicit-str-concat-isc
+    "ISC001",  # (конфликт с `COM812`)
+    # https://docs.astral.sh/ruff/rules/#flake8-commas-com
+    "COM812",  # (конфликт с `ISC001`)
+    # https://docs.astral.sh/ruff/rules/#flake8-self-slf
+    "SLF001",  # (не ругаться на приватные названия объектов)
+    # https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
+    "SIM105",  # (не ругаться на использование try except pass блока)
+    # https://docs.astral.sh/ruff/rules/#flake8-return-ret
+    "RET503",  # (не ругаться на отсутствие return None в конце функций)
+    # https://docs.astral.sh/ruff/rules/#flake8-blind-except-ble
+    "BLE001",  # (не ругаться на обработку обычного Exception)
+    # https://docs.astral.sh/ruff/rules/#flake8-django-dj  #! (ВРЕМЕННО)
+    "DJ001",   # (не ругаться на использование null в моделях для текстовых полей)
+    # https://docs.astral.sh/ruff/rules/#flake8-comprehensions-c4
+    # {} VS dict()  # https://switowski.com/blog/dict-function-vs-literal-syntax/
+    "C408",    # (не ругаться на использование классов коллекций вместо их литералов)
+]
+# Не давать исправлять эти ошибки в тултипе, и в том числе автоматически при линте через команду
+unfixable = [
+]
+
+
+[tool.ruff.lint.per-file-ignores]
+"asgi.py" = ["E402"]
+
+
+# https://docs.astral.sh/ruff/settings/#lintisort
+[tool.ruff.lint.isort]
+force-wrap-aliases = true  # Записывать импорты с несколькими `as` в кортеже
+combine-as-imports = true  # Записывать импорты с несколькими `as` в одной строке
+# force-sort-within-sections = true  # Всегда сортировать импорты по алфавиту, не обращая внимание на порядок import или from
+# from-first = true  # Записывать from импорты перед import
+# length-sort = true  # Сортировать импорты по длине строки а не по алфавиту
+# lines-after-imports = 2  # Количество пустых строк после последнего импорта
+# order-by-type = true  # Сортировать по регистру в дополнение к сортировке по алфавиту
+# required-imports = ["from __future__ import annotations"]  # Добавить импорт во все файлы
+
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"  # Не ругаться на одинарные кавычки
+docstring-quotes = "double"  # Ругаться на одинарные кавычки

@@ -1,4 +1,4 @@
-# Extend schema decorator for Channels
+# Extend websocket schema decorator for Django Channels
 
 
 > Provides [extend_ws_schema](#About-decorator) decorator to documentation [Cunsumer](https://channels.readthedocs.io/en/latest/topics/consumers.html) methods from [channels](https://github.com/django/channels) just like it does [drf-spectacular](https://github.com/tfranzel/drf-spectacular)

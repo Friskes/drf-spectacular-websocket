@@ -12,3 +12,4 @@ venv/
 __pycache__
 .git
 trash
+.pytest_cache
