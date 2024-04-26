@@ -2,7 +2,7 @@
 name = "drf_spectacular_websocket"
 # https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#version
 # https://packaging.python.org/en/latest/guides/single-sourcing-package-version/#single-sourcing-the-version
-version = "1.2.1"
+version = "1.2.2"
 license = {file = "LICENSE"}
 authors = [
   {name="Friskes", email="friskesx@gmail.com"},
