@@ -14,6 +14,19 @@ repos:
     rev: v4.6.0
     hooks:
       - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-toml
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        additional_dependencies:
+          - tomli
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 'v0.4.1'
@@ -28,3 +41,11 @@ repos:
 
       - id: ruff-format
         name: Проверка кода ruff форматтером.
+
+  - repo: local
+    hooks:
+      - id: pypi-readme
+        name: pypi-readme
+        language: python
+        entry: python tools/pypi_readme.py
+        types: [markdown]
