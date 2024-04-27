@@ -2,7 +2,6 @@
 
 > First off, thanks for taking the time to contribute!
 
-
 Contributions include but are not restricted to:
 - Reporting bugs
 - Contributing to code
