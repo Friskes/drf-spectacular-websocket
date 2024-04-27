@@ -14,7 +14,7 @@ Contributions include but are not restricted to:
 
 2. Clone the upstream repository to local:
     ```bash
-    git clone https://github.com/Friskes/drf-spectacular-websocket.git
+    git clone https://github.com/YOURNAME/drf-spectacular-websocket.git
     ```
 
 3. Add the fork as a new remote:
