@@ -41,11 +41,3 @@ repos:
 
       - id: ruff-format
         name: Проверка кода ruff форматтером.
-
-  - repo: local
-    hooks:
-      - id: pypi-readme
-        name: pypi-readme
-        language: python
-        entry: python tools/pypi_readme.py
-        types: [markdown]

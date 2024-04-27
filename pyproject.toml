@@ -1,8 +1,6 @@
 [project]
 name = "drf_spectacular_websocket"
 # https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#version
-# https://packaging.python.org/en/latest/guides/single-sourcing-package-version/#single-sourcing-the-version
-# version = "1.2.3"
 dynamic = ["version"]
 license = {file = "LICENSE"}
 authors = [
@@ -66,19 +64,16 @@ requires = ["setuptools>=64", "setuptools_scm[toml]>=8"]
 build-backend = "setuptools.build_meta"
 
 
-[tool.setuptools_scm]
-# Empty is fine
-
-
+# https://setuptools-scm.readthedocs.io/en/latest/
+# https://stackoverflow.com/a/76470558/19276507
+# Данная настройка позволяет PyPI получать версию пакета из GitHub release tag
 [project.entry-points."setuptools.finalize_distribution_options"]
 setuptools_scm = "setuptools_scm._integration.setuptools:infer_version"
 
-
-# [tool.setuptools.dynamic]
-# version = {attr = "src.drf_spectacular_websocket.__version__"}
+[tool.setuptools_scm]
 
 
-# https://setuptools.pypa.io/en/latest/userguide/datafiles.html
+# https://setuptools.pypa.io/en/latest/userguide/datafiles.html#package-data
 # https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#package-data
 # Данная настройка позволяет заменить MANIFEST.in файл для добавления дополнительных файлов в пакет
 [tool.setuptools.package-data]
@@ -87,7 +82,7 @@ setuptools_scm = "setuptools_scm._integration.setuptools:infer_version"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-python_files = 'test_*.py'
+python_files = "test_*.py"
 addopts = [
     "--strict-config",
     "--strict-markers",
