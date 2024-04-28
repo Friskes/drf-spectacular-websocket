@@ -1,6 +1,6 @@
 from src.drf_spectacular_websocket.schemas.schema import WsSchemaGenerator
 
-from tests.expected_schemas import expected_schema_1
+from tests.schemas.expected_schema import expected_schema_1
 
 
 # python -m pip install .

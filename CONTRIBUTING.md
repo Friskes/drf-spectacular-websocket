@@ -1,4 +1,4 @@
-# Contribution Guide
+# Contribution Guide 📖
 
 > First off, thanks for taking the time to contribute! 😇
 
@@ -12,13 +12,12 @@ Contributions include but are not restricted to:
 
 1. First, [fork](https://github.com/Friskes/drf-spectacular-websocket/fork) this [project](https://github.com/Friskes/drf-spectacular-websocket) to your own namespace using the fork button at the top right of the repository page.
 
-2. Clone the upstream repository to local:
+2. Clone your fork repository to local:
     ```bash
     git clone https://github.com/YOURNAME/drf-spectacular-websocket.git
     ```
 
 3. Add the fork as a new remote:
-    > where fork is the remote name of the fork repository.
     ```bash
     git remote add fork https://github.com/YOURNAME/drf-spectacular-websocket.git
     git fetch fork
@@ -35,7 +34,7 @@ Contributions include but are not restricted to:
     venv/Scripts/activate  # windows
     ```
 
-2. Install dependencies
+2. Install development dependencies
     ```bash
     pip install ."[dev]"  # linux
     pip install .[dev]  # windows
@@ -46,14 +45,16 @@ Contributions include but are not restricted to:
     pre-commit install
     ```
 
-> Run `pre-commit run --all-files` to run linters and formatters. This step is optional and will be executed automatically by git before you make a commit, but you may want to run it manually in order to apply fixes
+4. (Optional) Run `pre-commit run --all-files` to run linters and formatters.
+    > This step is optional and will be executed automatically by git before you make a commit, but you may want to run it manually in order to apply fixes.
 
-#### Now, all dependencies are installed into the Python environment you chose, which will be used for development after this point. 😎
+#### Now, all dependencies are installed into the Python environment you chose, which will be used for development after this point 🎉.
 
 ## Making changes to the project
 
-1. Don't modify code on the main branch, the main branch should always keep track of origin/main. 🧐
-    > To update main branch to date:
+> Don't modify code on the main branch, the main branch should always keep track of origin/main 💡.
+
+1. (Optional) To update main branch to date:
     ```bash
     git pull origin main
     # In rare cases that your local main branch diverges from the remote main:
@@ -70,21 +71,20 @@ Contributions include but are not restricted to:
 - Writing and running tests
     - Tests are contained within the `tests` directory, and follow the same directory structure as the `drf_spectacular_websocket` module. If you are adding a test case, it should be located within the correct submodule of `tests`. E.g., tests for `drf_spectacular_websocket/schemas/schema.py` reside in `tests/schemas/test_schema.py`.
 
-1. Make your changes
+3. Make your changes
 
-### Run tests
-> Make sure that nothing is broken after making changes and all tests are checked.
-```bash
-pytest
-```
-> The test suite is still simple and needs expansion! Please help write more test cases.
+4. Make sure that nothing is broken after making changes and all tests are checked.
+    ```bash
+    pytest
+    ```
+    > The test suite is still simple and needs expansion! Please help write more test cases.
 
-2. Commit your changes to git. We follow [conventional commits](https://www.conventionalcommits.org/) which are enforced using a pre-commit hook.
+5. Commit your changes to git 📝. We follow [conventional commits](https://www.conventionalcommits.org/) which are enforced using a pre-commit hook.
 
-3. Push the changes to your fork
+6. Push the changes to your fork
 
-4. Open a [pull request](https://docs.github.com/en/pull-requests). Give the pull request a descriptive title indicating what it changes. The style of the PR title should also follow [conventional commits](https://www.conventionalcommits.org/), and this is enforced using a GitHub action.
+7. Open a [pull request](https://docs.github.com/en/pull-requests) 📥. *(using the `pull request` button at the top right of the repository page)*. Give the pull request a descriptive title indicating what it changes. The style of the PR title should also follow [conventional commits](https://www.conventionalcommits.org/).
 
-5. Go to the [Release Action](https://github.com/Friskes/drf-spectacular-websocket/actions/workflows/publish-to-pypi.yml) and make sure that the workflow was successful.
+8. Go to the [Release Action](https://github.com/Friskes/drf-spectacular-websocket/actions/workflows/publish-to-pypi.yml) and make sure that the workflow was successful ✅.
 
-6. Wait until the pull request is accepted 😎.
+9. Wait until the pull request is accepted by the repository owner ⏳.
