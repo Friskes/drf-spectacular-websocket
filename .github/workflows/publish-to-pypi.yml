@@ -53,6 +53,10 @@ jobs:
       run: |
         python -m ruff format
 
+    - name: Run mypy
+      run: |
+        python -m mypy
+
     - name: Run pytest
       run: |
         python -m pytest

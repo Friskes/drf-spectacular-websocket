@@ -46,17 +46,19 @@ dev = [
     "pre-commit>=3.5.0",
     "ruff==0.4.1",
     "pytest>=7.0.1",
+    "mypy>=1.10.0",
 ]
 ci = [
     "ruff==0.4.1",
     "pytest>=7.0.1",
+    "mypy>=1.10.0",
 ]
 
 
 [project.urls]
-"Homepage" = "https://github.com/Friskes/drf-spectacular-websocket"
+"Repository" = "https://github.com/Friskes/drf-spectacular-websocket"
+"Changelog" = "https://github.com/Friskes/drf-spectacular-websocket/releases/"
 "Bug Reports" = "https://github.com/Friskes/drf-spectacular-websocket/issues"
-"Source" = "https://github.com/Friskes/drf-spectacular-websocket/"
 
 
 [build-system]
@@ -92,6 +94,22 @@ filterwarnings = [
     "error",
     "ignore::DeprecationWarning:typer",
 ]
+
+
+[tool.mypy]
+# for ignore rules:  # type: ignore[error_code]
+packages = ["src.drf_spectacular_websocket", "tests"]
+python_version = "3.9"
+strict = true  # строгая проверка типов
+ignore_missing_imports = true  # [import-untyped]
+# Проверять тело функции без типизации аргументов
+check_untyped_defs = true  # [annotation-unchecked]
+# Не ругаться на нетипизированный родительский класс
+disallow_subclassing_any = false  # [misc]
+# Не ругаться на вызов нетипизированной функции
+disallow_untyped_calls = false  # [no-untyped-call]
+# Не ругаться на return -> Any
+warn_return_any = false  # [no-any-return]
 
 
 # https://docs.astral.sh/ruff/settings/

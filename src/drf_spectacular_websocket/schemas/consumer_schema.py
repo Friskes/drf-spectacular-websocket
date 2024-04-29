@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Any
+
 from drf_spectacular.openapi import AutoSchema
 from drf_spectacular.plumbing import (
     build_media_type_object,
@@ -8,12 +10,18 @@ from drf_spectacular.plumbing import (
     is_serializer,
 )
 from inflection import camelize
-from rest_framework import serializers, status
+from rest_framework import status
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
+from rest_framework.serializers import CharField, Serializer
+
+if TYPE_CHECKING:
+    from drf_spectacular.utils import Direction, _SchemaType
+
+    from drf_spectacular_websocket.types import _Type
 
 
-class EmptySerializer(serializers.Serializer):
+class EmptySerializer(Serializer):
     pass
 
 
@@ -23,44 +31,48 @@ class NotReadyError(Exception):
 
 class EventHandler:
     request = None
-    kwargs = {}
+    kwargs: dict[str, Any] = {}
     versioning_class = None
 
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         self.name = name
 
-    def get_parsers(self):
+    def get_parsers(self) -> list[JSONParser]:
         return [JSONParser]
 
-    def get_renderers(self):
+    def get_renderers(self) -> list[JSONRenderer]:
         return [JSONRenderer]
 
-    def determine_version(self, *args, **kwargs):
+    def determine_version(self, *args: Any, **kwargs: Any) -> tuple[None, None]:
         return None, None
 
 
 class ConsumerAutoSchema(AutoSchema):
     """"""
 
-    def __init__(self):
+    method: _Type
+    method_name: str
+    event: str
+    include_event: bool
+
+    def __init__(self) -> None:
         super().__init__()
-        self.method_name: str | None = None
-        self.event: str | None = None
-        self.prepared = {'request': {}, 'response': {}}
+        self.prepared: dict[str, dict[str, Serializer]] = {'request': {}, 'response': {}}
 
     @property
-    def view(self):
+    def view(self) -> EventHandler:
         return EventHandler(name=self.event)
 
-    def get_operation_id(self):
+    def get_operation_id(self) -> str:
         return '%s_%s' % (self.method, self.method_name)
 
-    def get_request_body(self, serializer, method):
+    def get_request_body(self, serializer: Serializer) -> dict[str, dict[str, _SchemaType]] | None:
+        """"""
         _, serializer = self._force_ws_serializer(
             serializer=serializer, serializer_type='request'
         ).popitem()
 
-        schema, request_body_required = self._get_request_for_media_type(serializer, method)
+        schema, _ = self._get_request_for_media_type(serializer)
         if schema is None:
             return None
 
@@ -76,8 +88,11 @@ class ConsumerAutoSchema(AutoSchema):
             }
         }
 
-    def _get_request_for_media_type(self, serializer, method):
-        component = self.resolve_serializer(serializer, method)
+    def _get_request_for_media_type(
+        self, serializer: Serializer, direction: Direction = 'request'
+    ) -> tuple[_SchemaType | None, bool]:
+        """"""
+        component = self.resolve_serializer(serializer, direction)
 
         if not component:
             # serializer is empty so skip content enumeration
@@ -86,39 +101,44 @@ class ConsumerAutoSchema(AutoSchema):
         schema = component.ref
         return schema, True
 
-    def get_response_bodies(self, response_serializers, method):
-        if response_serializers:
-            if isinstance(response_serializers, dict):
-                return {
-                    f'{self.event}   {code}': self._get_response_for_code(
-                        force_instance(serializer), code
-                    )
-                    for code, serializer in response_serializers.items()
-                }
+    def get_response_bodies(
+        self, response_serializers: Serializer | dict[int, Serializer]
+    ) -> dict[str, Any] | None:
+        """"""
+        if not response_serializers:
+            return None
 
-            serializers_ = self._force_ws_serializer(
-                serializer=response_serializers, direction='receive', serializer_type='response'
-            )
-
+        if isinstance(response_serializers, dict):
             return {
-                f'{event}   {status.HTTP_200_OK}': self._get_response_for_code(
-                    serializer, status.HTTP_200_OK
-                )
-                for event, serializer in serializers_.items()
+                f'{self.event}   {code}': self._get_response_for_code(force_instance(serializer), code)
+                for code, serializer in response_serializers.items()
             }
 
-    def _get_serializer_name(self, serializer, direction: str, bypass_extensions: bool = False):
-        return serializer.__class__.__name__
+        serializers_ = self._force_ws_serializer(
+            serializer=response_serializers, serializer_type='response', direction='receive'
+        )
 
-    def get_tags(self):
+        return {
+            f'{event}   {status.HTTP_200_OK}': self._get_response_for_code(
+                serializer, status.HTTP_200_OK
+            )
+            for event, serializer in serializers_.items()
+        }
+
+    def _get_serializer_name(
+        self, serializer: Serializer, direction: str, bypass_extensions: bool = False
+    ) -> str:
+        return type(serializer).__name__
+
+    def get_tags(self) -> list[str]:
         return ['web_socket']
 
-    def get_summary(self):
+    def get_summary(self) -> str:
         return ''
 
     def _force_ws_serializer(
-        self, serializer, direction: str | None = None, serializer_type: str | None = None
-    ) -> dict[str, serializers.Serializer]:
+        self, serializer: Serializer, serializer_type: Direction, direction: _Type | None = None
+    ) -> dict[str, Serializer]:
         if serializer is None:
             return {self.event: force_instance(EmptySerializer)}
 
@@ -149,25 +169,25 @@ class ConsumerAutoSchema(AutoSchema):
 
         if is_list_serializer(serializer):
             inner_name: str = 'Ws%sDataSerializer' % self.event.capitalize()
-            serializer = type(inner_name, (serializers.Serializer,), {self.event: serializer})()
+            serializer = type(inner_name, (Serializer,), {self.event: serializer})()
 
             attrs = {
-                'event': serializers.CharField(default=self.event),
+                'event': CharField(default=self.event),
                 'data': serializer,
             }
         else:
             attrs = {
-                'event': serializers.CharField(default=self.event),
+                'event': CharField(default=self.event),
                 'data': serializer,
             }
 
-        prepared = type(name, (serializers.Serializer,), attrs)() if self.include_event else serializer
+        prepared = type(name, (Serializer,), attrs)() if self.include_event else serializer
 
         self.prepared[serializer_type][self.event] = prepared
         return {self.event: prepared}
 
-    def _force_serializers_list(self, events, serializer_type) -> dict[str, serializers.Serializer]:
-        result: dict[str, serializers.Serializer] = {}
+    def _force_serializers_list(self, events: list[str], serializer_type: str) -> dict[str, Serializer]:
+        result: dict[str, Serializer] = {}
 
         for event in events:
             forced = self.prepared[serializer_type].get(event)

@@ -13,7 +13,7 @@ class Consumer(JsonWebsocketConsumer):
         request=InputSerializer,
         responses=OutputSerializer,
     )
-    def method_1(self):
+    def method_1(self) -> None:
         pass
 
     @extend_ws_schema(
@@ -26,7 +26,7 @@ class Consumer(JsonWebsocketConsumer):
             status.HTTP_400_BAD_REQUEST: BadOutputSerializer,
         },
     )
-    def method_2(self):
+    def method_2(self) -> None:
         pass
 
     @extend_ws_schema(
@@ -36,7 +36,7 @@ class Consumer(JsonWebsocketConsumer):
         request=None,
         responses=OutputSerializer,
     )
-    def method_3(self):
+    def method_3(self) -> None:
         pass
 
     @extend_ws_schema(
@@ -49,5 +49,5 @@ class Consumer(JsonWebsocketConsumer):
             status.HTTP_400_BAD_REQUEST: BadOutputSerializer,
         },
     )
-    def method_4(self):
+    def method_4(self) -> None:
         pass
