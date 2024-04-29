@@ -48,16 +48,12 @@ dev = [
     "pytest>=7.0.1",
     "mypy>=1.10.0",
     "pytest-cov>=5.0.0",
-    # "covdefaults",
-    # "codecov-cli",
 ]
 ci = [
     "ruff==0.4.1",
     "pytest>=7.0.1",
     "mypy>=1.10.0",
     "pytest-cov>=5.0.0",
-    # "covdefaults",
-    # "codecov-cli",
 ]
 
 
@@ -122,11 +118,10 @@ warn_return_any = false  # [no-any-return]
 concurrency = ["multiprocessing", "thread"]
 omit = ["*/tests/*"]
 parallel = true
-# plugins = ["covdefaults"]
 source = ["src.drf_spectacular_websocket"]
 
 [tool.coverage.report]
-fail_under = 50
+fail_under = 90
 
 
 # https://docs.astral.sh/ruff/settings/
