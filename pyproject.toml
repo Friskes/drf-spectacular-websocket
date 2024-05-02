@@ -58,9 +58,9 @@ ci = [
 
 
 [project.urls]
-"Repository" = "https://github.com/Friskes/drf-spectacular-websocket"
-"Changelog" = "https://github.com/Friskes/drf-spectacular-websocket/releases/"
-"Bug Reports" = "https://github.com/Friskes/drf-spectacular-websocket/issues"
+Homepage = "https://github.com/Friskes/drf-spectacular-websocket"
+Changelog = "https://github.com/Friskes/drf-spectacular-websocket/releases/"
+Issues = "https://github.com/Friskes/drf-spectacular-websocket/issues"
 
 
 [build-system]
