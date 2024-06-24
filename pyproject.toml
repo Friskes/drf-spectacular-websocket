@@ -31,7 +31,7 @@ classifiers = [
 ]
 # pip install .
 dependencies = [
-    "django>=4.2.11",
+    "django>=4.0.0",
     "djangorestframework>=3.14.0",
     "drf-spectacular>=0.27.2",
     "drf-spectacular-sidecar>=2024.4.1",
