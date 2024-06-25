@@ -1,1 +1,1 @@
-from .schema import WsSchemaGenerator
+from .schema import WsSchemaGenerator  # noqa: F401

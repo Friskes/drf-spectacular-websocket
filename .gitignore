@@ -16,3 +16,4 @@ trash
 .ruff_cache
 .mypy_cache
 .coverage
+htmlcov

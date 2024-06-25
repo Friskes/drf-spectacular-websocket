@@ -19,7 +19,7 @@ jobs:
       # max-parallel: 5
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
-        django-version: ['Django>=3.2,<3.3', 'Django>=4.0,<4.1', 'Django>=4.1,<4.2', 'Django>=4.2,<4.3']
+        django-version: ['Django>=4.0,<4.1', 'Django>=4.1,<4.2', 'Django>=4.2,<4.3']
         platform: [
           ubuntu-latest,
           # macos-latest,
@@ -124,30 +124,30 @@ jobs:
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
 
-  # publish-to-testpypi:
-  #   name: Publish Python 🐍 distribution 📦 to TestPyPI
+  publish-to-testpypi:
+    name: Publish Python 🐍 distribution 📦 to TestPyPI
 
-  #   if: github.repository_owner == 'Friskes' && github.event_name == 'push'
+    if: github.repository_owner == 'Friskes' && github.event_name == 'push'
 
-  #   needs:
-  #   - build
-  #   runs-on: ubuntu-latest
+    needs:
+    - build
+    runs-on: ubuntu-latest
 
-  #   environment:
-  #     name: testpypi
-  #     url: https://test.pypi.org/p/drf-spectacular-websocket
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/drf-spectacular-websocket
 
-  #   permissions:
-  #     id-token: write
+    permissions:
+      id-token: write
 
-  #   steps:
-  #   - name: Download all the dists
-  #     uses: actions/download-artifact@v4
-  #     with:
-  #       name: python-package-distributions
-  #       path: dist/
+    steps:
+    - name: Download all the dists
+      uses: actions/download-artifact@v4
+      with:
+        name: python-package-distributions
+        path: dist/
 
-  #   - name: Publish distribution 📦 to TestPyPI
-  #     uses: pypa/gh-action-pypi-publish@release/v1
-  #     with:
-  #       repository-url: https://test.pypi.org/legacy/
+    - name: Publish distribution 📦 to TestPyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://test.pypi.org/legacy/

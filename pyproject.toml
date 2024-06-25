@@ -21,7 +21,6 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Framework :: Django :: 3.2",
     "Framework :: Django :: 4.0",
     "Framework :: Django :: 4.1",
     "Framework :: Django :: 4.2",
@@ -48,13 +47,23 @@ dev = [
     "pytest>=7.0.1",
     "mypy>=1.10.0",
     "pytest-cov>=5.0.0",
+    "djangorestframework-simplejwt>=5.3.0",
+    "channels-auth-token-middlewares>=1.1.0",
 ]
 ci = [
     "ruff==0.4.1",
     "pytest>=7.0.1",
     "mypy>=1.10.0",
     "pytest-cov>=5.0.0",
+    "djangorestframework-simplejwt>=5.3.0",
+    "channels-auth-token-middlewares>=1.1.0",
 ]
+
+
+# https://packaging.python.org/en/latest/guides/single-sourcing-package-version/#single-sourcing-the-version
+# Получать номер версии из переменной __version__ из __init__.py пакета
+# [tool.setuptools.dynamic]
+# version = {attr="drf_spectacular_websocket.__version__"}
 
 
 [project.urls]
@@ -183,6 +192,7 @@ extend-select = [
     "SIM",    # https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
     "TID",    # https://docs.astral.sh/ruff/rules/#flake8-tidy-imports-tid
     "TCH",    # https://docs.astral.sh/ruff/rules/#flake8-type-checking-tch
+    "TD",     # https://docs.astral.sh/ruff/rules/#flake8-todos-td
     "INT",    # https://docs.astral.sh/ruff/rules/#flake8-gettext-int
     "FLY",    # https://docs.astral.sh/ruff/rules/#flynt-fly
     "PERF",   # https://docs.astral.sh/ruff/rules/#perflint-perf
@@ -193,8 +203,8 @@ extend-select = [
 ]
 ignore = [
     # https://docs.astral.sh/ruff/rules/#pyflakes-f
-    "F401",    # (не ругаться на неиспользуемые импорты)
-    "F841",    # (не ругаться на неиспользуемые переменные)
+    # "F401",    # (не ругаться на неиспользуемые импорты)
+    # "F841",    # (не ругаться на неиспользуемые переменные)
     "F403",    # (не ругаться на использование from ... import *)
     # https://docs.astral.sh/ruff/rules/#pyupgrade-up
     "UP031",   # (не ругаться на форматирование с помощью %s)
@@ -221,11 +231,16 @@ ignore = [
     "RET503",  # (не ругаться на отсутствие return None в конце функций)
     # https://docs.astral.sh/ruff/rules/#flake8-blind-except-ble
     "BLE001",  # (не ругаться на обработку обычного Exception)
-    # https://docs.astral.sh/ruff/rules/#flake8-django-dj  #! (ВРЕМЕННО)
+    # https://docs.astral.sh/ruff/rules/#flake8-django-dj
+    # https://docs.djangoproject.com/en/4.2/ref/models/fields/#null
+    # https://sentry.io/answers/django-difference-between-null-and-blank/
+    # https://www.django-rest-framework.org/api-guide/fields/#charfield
     "DJ001",   # (не ругаться на использование null в моделях для текстовых полей)
     # https://docs.astral.sh/ruff/rules/#flake8-comprehensions-c4
     # {} VS dict()  # https://switowski.com/blog/dict-function-vs-literal-syntax/
     "C408",    # (не ругаться на использование классов коллекций вместо их литералов)
+    "TD001",   # (не ругаться на использование FIXME и XXX)
+    "TD003",   # (не ругаться на отсутствие ссылки на issues)
 ]
 # Не давать исправлять эти ошибки в тултипе, и в том числе автоматически при линте через команду
 unfixable = [

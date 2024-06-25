@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
+from channels.consumer import AsyncConsumer
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.conf import settings
 from django.contrib.admindocs.views import simplify_regex
@@ -9,21 +10,27 @@ from django.utils.module_loading import import_string
 from drf_spectacular.generators import SchemaGenerator
 from typing_extensions import Never  # noqa: UP035
 
-from .consumer_schema import ConsumerAutoSchema, NotReadyError
-
 if TYPE_CHECKING:
     from collections.abc import Callable
 
     from channels.consumer import AsyncConsumer
+    from django.urls.resolvers import URLPattern
+    from drf_spectacular.utils import Direction
     from rest_framework.serializers import Serializer
+
+    from drf_spectacular_websocket.types import HttpMethod
+
+    from .consumer_schema import ConsumerAutoSchema
 
 
 class WsSchemaGenerator(SchemaGenerator):
     """"""
 
+    ws_to_http_method = {'send': 'post', 'receive': 'get'}
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.prepared: dict[str, dict[str, Serializer]] = {'request': {}, 'response': {}}
+        self.prepared: dict[Direction, dict[str, Serializer]] = {'request': {}, 'response': {}}
 
     def parse(self, input_request: None, public: bool) -> dict[str, Any]:
         result = super().parse(input_request, public)
@@ -36,28 +43,48 @@ class WsSchemaGenerator(SchemaGenerator):
         return import_string(settings.ASGI_APPLICATION)
 
     @property
-    def get_ws_endpoints(self) -> list[Never] | dict[str, Any]:
+    def get_ws_endpoints(self) -> list[Never] | dict[str, dict[HttpMethod, Any]]:
         application = self.get_asgi_application()
 
-        socket_routes = application.application_mapping.get('websocket')
+        middleware = application.application_mapping.get('websocket')
 
-        if socket_routes is None:
+        if middleware is None:
             return []
 
-        router = socket_routes
+        router = self._search_router(middleware)
 
-        while not isinstance(router, URLRouter):
-            router = self._get_router(router)
+        return self._collect_nested_endpoints(router)
 
-        result = {}
+    def _collect_nested_endpoints(self, router: URLRouter) -> dict[str, dict[HttpMethod, Any]]:
+        endpoints = {}
+        routes: dict[str, list[URLPattern]] = {'': router.routes}
 
-        for route in router.routes:
-            consumer = route.callback.consumer_class()
-            result.update(self._find_methods(consumer=consumer, path=simplify_regex(str(route.pattern))))
+        while routes:
+            cur_lvl_routes: dict[str, list[URLPattern]] = {}
 
-        return result
+            for parent_pattern, nested_routes in routes.items():
+                for route in nested_routes:
+                    pattern = f'{parent_pattern}{route.pattern}'
 
-    def _get_router(self, middleware: Any) -> Any:
+                    #                                           support: AuthMiddlewareStack
+                    if isinstance(route.callback, URLRouter) or hasattr(route.callback, 'inner'):
+                        router = self._search_router(route.callback)
+                        cur_lvl_routes.update({pattern: router.routes})
+                    else:
+                        consumer = route.callback.consumer_class()
+                        endpoints.update(
+                            self._find_methods(consumer=consumer, path=simplify_regex(pattern))
+                        )
+            routes = cur_lvl_routes
+
+        return endpoints
+
+    def _search_router(self, middleware: Any) -> URLRouter:
+        while not isinstance(middleware, URLRouter):
+            middleware = self._get_child_middleware(middleware)
+        return middleware
+
+    def _get_child_middleware(self, middleware: Any) -> Any:
         try:
             return middleware.inner
         except AttributeError:
@@ -73,26 +100,23 @@ class WsSchemaGenerator(SchemaGenerator):
         while methods_list:
             method = methods_list.pop(0)
             event: str = method.event  # type: ignore[attr-defined]
-            name: str = '%s::%s' % (path, event)
 
             action_schema = self.get_action_schema(method=method)
-            try:
-                consumer_endpoints[name] = {
-                    action_schema.method == 'receive' and 'get' or 'post': {
-                        'operationId': f'{event}_{action_schema.get_operation_id()}',
-                        'requestBody': action_schema.get_request_body(
-                            serializer=action_schema.get_request_serializer(),
-                        ),
-                        'summary': action_schema.get_summary(),
-                        'description': action_schema.get_description(),
-                        'tags': action_schema.get_tags(),
-                        'responses': action_schema.get_response_bodies(
-                            action_schema.get_response_serializers(),
-                        ),
-                    }
+
+            consumer_endpoints[f'{path}::{event}'] = {
+                self.ws_to_http_method[action_schema.method]: {
+                    'operationId': f'{event}_{action_schema.get_operation_id()}',
+                    'requestBody': action_schema.get_request_body(
+                        serializer=action_schema.get_request_serializer(),
+                    ),
+                    'summary': action_schema.get_summary(),
+                    'description': action_schema.get_description(),
+                    'tags': action_schema.get_tags(),
+                    'responses': action_schema.get_response_bodies(
+                        action_schema.get_response_serializers(),
+                    ),
                 }
-            except NotReadyError:
-                methods_list.append(method)
+            }
 
         return consumer_endpoints
 
@@ -111,7 +135,6 @@ class WsSchemaGenerator(SchemaGenerator):
         schema.method_name = method.__name__
         schema.method = method.type  # type: ignore[attr-defined]
         schema.event = method.event  # type: ignore[attr-defined]
-        schema.include_event = method.include_event  # type: ignore[attr-defined]
         schema.registry = self.registry
         schema.prepared = self.prepared
         return schema
