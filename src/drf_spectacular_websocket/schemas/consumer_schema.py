@@ -7,25 +7,19 @@ from drf_spectacular.plumbing import (
     build_media_type_object,
     force_instance,
     is_list_serializer,
-    is_serializer,
 )
-from inflection import camelize
 from rest_framework import status
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
-from rest_framework.serializers import CharField, Serializer
+from rest_framework.serializers import Serializer
 
 if TYPE_CHECKING:
     from drf_spectacular.utils import Direction, _SchemaType
 
-    from drf_spectacular_websocket.types import _Type
+    from drf_spectacular_websocket.types import WsMethod
 
 
 class EmptySerializer(Serializer):
-    pass
-
-
-class NotReadyError(Exception):
     pass
 
 
@@ -50,21 +44,20 @@ class EventHandler:
 class ConsumerAutoSchema(AutoSchema):
     """"""
 
-    method: _Type
+    method: WsMethod
     method_name: str
     event: str
-    include_event: bool
 
     def __init__(self) -> None:
         super().__init__()
-        self.prepared: dict[str, dict[str, Serializer]] = {'request': {}, 'response': {}}
+        self.prepared: dict[Direction, dict[str, Serializer]] = {'request': {}, 'response': {}}
 
     @property
     def view(self) -> EventHandler:
         return EventHandler(name=self.event)
 
     def get_operation_id(self) -> str:
-        return '%s_%s' % (self.method, self.method_name)
+        return f'{self.method}_{self.method_name}'
 
     def get_request_body(self, serializer: Serializer) -> dict[str, dict[str, _SchemaType]] | None:
         """"""
@@ -103,7 +96,7 @@ class ConsumerAutoSchema(AutoSchema):
 
     def get_response_bodies(
         self, response_serializers: Serializer | dict[int, Serializer]
-    ) -> dict[str, Any] | None:
+    ) -> _SchemaType | None:
         """"""
         if not response_serializers:
             return None
@@ -133,74 +126,25 @@ class ConsumerAutoSchema(AutoSchema):
     def get_tags(self) -> list[str]:
         return ['web_socket']
 
-    def get_summary(self) -> str:
-        return ''
-
     def _force_ws_serializer(
-        self, serializer: Serializer, serializer_type: Direction, direction: _Type | None = None
+        self, serializer: Serializer, serializer_type: Direction, direction: WsMethod | None = None
     ) -> dict[str, Serializer]:
+        """"""
         if serializer is None:
             return {self.event: force_instance(EmptySerializer)}
 
         serializer = force_instance(serializer)
 
-        if isinstance(serializer, EmptySerializer):
-            return {self.event: serializer}
-
         if direction is None:
             direction = self.method
-
-        if isinstance(serializer, list):
-            return self._force_serializers_list(events=serializer, serializer_type=serializer_type)
 
         if self.event in self.prepared[serializer_type]:
             return {self.event: self.prepared[serializer_type][self.event]}
 
         if is_list_serializer(serializer):
-            serializer_name = serializer.child.__class__.__name__
-        elif is_serializer(serializer):
-            serializer_name = serializer.__class__.__name__
-        else:
-            raise AssertionError('Invalid type of serializer')
+            inner_name: str = f'Ws{self.event.capitalize()}DataSerializer'
 
-        name: str = self._get_forced_serializer_name(
-            direction=direction, serializer_name=serializer_name
-        )
-
-        if is_list_serializer(serializer):
-            inner_name: str = 'Ws%sDataSerializer' % self.event.capitalize()
             serializer = type(inner_name, (Serializer,), {self.event: serializer})()
 
-            attrs = {
-                'event': CharField(default=self.event),
-                'data': serializer,
-            }
-        else:
-            attrs = {
-                'event': CharField(default=self.event),
-                'data': serializer,
-            }
-
-        prepared = type(name, (Serializer,), attrs)() if self.include_event else serializer
-
-        self.prepared[serializer_type][self.event] = prepared
-        return {self.event: prepared}
-
-    def _force_serializers_list(self, events: list[str], serializer_type: str) -> dict[str, Serializer]:
-        result: dict[str, Serializer] = {}
-
-        for event in events:
-            forced = self.prepared[serializer_type].get(event)
-            if forced is None:
-                raise NotReadyError
-            result[event] = forced
-
-        return result
-
-    def _get_forced_serializer_name(self, direction: str, serializer_name: str) -> str:
-        name: str = 'Ws%s' % direction.capitalize()
-        event: str = camelize(self.event)
-        if serializer_name.startswith(event):
-            return '%s%s' % (name, serializer_name)
-
-        return '%s%s%s' % (name, event, serializer_name)
+        self.prepared[serializer_type][self.event] = serializer
+        return {self.event: serializer}

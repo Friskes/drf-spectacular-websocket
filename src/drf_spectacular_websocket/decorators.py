@@ -7,13 +7,15 @@ from drf_spectacular.utils import extend_schema
 from .schemas.consumer_schema import ConsumerAutoSchema
 
 if TYPE_CHECKING:
-    from src.drf_spectacular_websocket.types import DecoratedCallable, _Type
+    from src.drf_spectacular_websocket.types import DecoratedCallable
+
+    from drf_spectacular_websocket.types import WsMethod
 
 __all__ = ('extend_ws_schema',)
 
 
 def extend_ws_schema(
-    type: _Type = 'send',  # noqa: A002
+    type: WsMethod = 'send',  # noqa: A002
     **kwargs: Any,
 ) -> Callable[[DecoratedCallable], DecoratedCallable]:
     """
@@ -35,7 +37,6 @@ def extend_ws_schema(
         func.schema = ConsumerAutoSchema  # type: ignore[attr-defined]
         func.type = type  # type: ignore[attr-defined]
         func.event = func.__name__  # type: ignore[attr-defined]
-        func.include_event = False  # type: ignore[attr-defined]
         return extend_schema(type, **kwargs)(func)
 
     return decorator

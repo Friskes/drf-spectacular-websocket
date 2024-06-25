@@ -1,10 +1,9 @@
 from src.drf_spectacular_websocket.schemas.schema import WsSchemaGenerator
 
-from tests.schemas.expected_schema import expected_schema_1
+from tests.schemas.expected_data import expected_schema_1
 
 
-# python -m pip install .
-# pytest -s ./tests
+# pytest -s ./tests/schemas/test_schema.py::test_schema
 def test_schema() -> None:
     """"""
     generator = WsSchemaGenerator()
