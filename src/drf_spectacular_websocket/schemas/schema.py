@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from typing import TYPE_CHECKING, Any
 
 from channels.consumer import AsyncConsumer
@@ -124,7 +125,12 @@ class WsSchemaGenerator(SchemaGenerator):
     def _get_extended_methods_list(consumer: AsyncConsumer) -> list[Callable[..., Any]]:
         methods_list = []
         for attr in dir(consumer):
-            method = getattr(consumer, attr)
+            #
+            with warnings.catch_warnings():
+                warnings.simplefilter('ignore', RuntimeWarning)
+
+                method = getattr(consumer, attr)
+
             if callable(method) and hasattr(method, 'kwargs'):
                 methods_list.append(method)
         return methods_list
