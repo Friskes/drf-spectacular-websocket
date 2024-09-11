@@ -103,7 +103,7 @@ class ConsumerAutoSchema(AutoSchema):
 
         if isinstance(response_serializers, dict):
             return {
-                f'{self.event}   {code}': self._get_response_for_code(force_instance(serializer), code)
+                code: self._get_response_for_code(force_instance(serializer), code)
                 for code, serializer in response_serializers.items()
             }
 
@@ -112,7 +112,7 @@ class ConsumerAutoSchema(AutoSchema):
         )
 
         return {
-            f'{event}   {status.HTTP_200_OK}': self._get_response_for_code(
+            status.HTTP_200_OK: self._get_response_for_code(  # noqa: B035
                 serializer, status.HTTP_200_OK
             )
             for event, serializer in serializers_.items()
