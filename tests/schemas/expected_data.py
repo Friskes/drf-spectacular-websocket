@@ -11,7 +11,7 @@ expected_router_schema1 = {
             'description': 'method_1 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_1\xa0\xa0\xa0200': {
+                '200': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
@@ -32,13 +32,13 @@ expected_router_schema1 = {
             'description': 'method_2 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_2\xa0\xa0\xa0201': {
+                '201': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
                     'description': '',
                 },
-                'method_2\xa0\xa0\xa0400': {
+                '400': {
                     'content': {
                         'application/json': {
                             'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -52,12 +52,11 @@ expected_router_schema1 = {
     '/B/consumer-path/::method_3': {
         'get': {
             'operationId': 'method_3_receive',
-            'requestBody': None,
             'summary': 'method_3 summary',
             'description': 'method_3 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_3\xa0\xa0\xa0200': {
+                '200': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
@@ -69,18 +68,17 @@ expected_router_schema1 = {
     '/B/consumer-path/::method_4': {
         'get': {
             'operationId': 'method_4_receive',
-            'requestBody': None,
             'summary': 'method_4 summary',
             'description': 'method_4 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_4\xa0\xa0\xa0201': {
+                '201': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
                     'description': '',
                 },
-                'method_4\xa0\xa0\xa0400': {
+                '400': {
                     'content': {
                         'application/json': {
                             'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -103,7 +101,7 @@ expected_router_schema1 = {
             'description': 'method_1 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_1\xa0\xa0\xa0200': {
+                '200': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
@@ -124,13 +122,13 @@ expected_router_schema1 = {
             'description': 'method_2 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_2\xa0\xa0\xa0201': {
+                '201': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
                     'description': '',
                 },
-                'method_2\xa0\xa0\xa0400': {
+                '400': {
                     'content': {
                         'application/json': {
                             'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -144,12 +142,11 @@ expected_router_schema1 = {
     '/A/AA/consumer-path/::method_3': {
         'get': {
             'operationId': 'method_3_receive',
-            'requestBody': None,
             'summary': 'method_3 summary',
             'description': 'method_3 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_3\xa0\xa0\xa0200': {
+                '200': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
@@ -161,18 +158,17 @@ expected_router_schema1 = {
     '/A/AA/consumer-path/::method_4': {
         'get': {
             'operationId': 'method_4_receive',
-            'requestBody': None,
             'summary': 'method_4 summary',
             'description': 'method_4 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_4\xa0\xa0\xa0201': {
+                '201': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
                     'description': '',
                 },
-                'method_4\xa0\xa0\xa0400': {
+                '400': {
                     'content': {
                         'application/json': {
                             'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -195,7 +191,7 @@ expected_router_schema1 = {
             'description': 'method_1 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_1\xa0\xa0\xa0200': {
+                '200': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
@@ -216,13 +212,13 @@ expected_router_schema1 = {
             'description': 'method_2 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_2\xa0\xa0\xa0201': {
+                '201': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
                     'description': '',
                 },
-                'method_2\xa0\xa0\xa0400': {
+                '400': {
                     'content': {
                         'application/json': {
                             'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -236,12 +232,11 @@ expected_router_schema1 = {
     '/A/AB/AAA/consumer-path/::method_3': {
         'get': {
             'operationId': 'method_3_receive',
-            'requestBody': None,
             'summary': 'method_3 summary',
             'description': 'method_3 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_3\xa0\xa0\xa0200': {
+                '200': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
@@ -253,18 +248,17 @@ expected_router_schema1 = {
     '/A/AB/AAA/consumer-path/::method_4': {
         'get': {
             'operationId': 'method_4_receive',
-            'requestBody': None,
             'summary': 'method_4 summary',
             'description': 'method_4 description',
             'tags': ['web_socket'],
             'responses': {
-                'method_4\xa0\xa0\xa0201': {
+                '201': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/OutputSerializer'}}
                     },
                     'description': '',
                 },
-                'method_4\xa0\xa0\xa0400': {
+                '400': {
                     'content': {
                         'application/json': {
                             'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -293,7 +287,7 @@ expected_schema_1 = {
                 'description': 'method_1 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_1\xa0\xa0\xa0200': {
+                    '200': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -316,7 +310,7 @@ expected_schema_1 = {
                 'description': 'method_2 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_2\xa0\xa0\xa0201': {
+                    '201': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -324,7 +318,7 @@ expected_schema_1 = {
                         },
                         'description': '',
                     },
-                    'method_2\xa0\xa0\xa0400': {
+                    '400': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -338,12 +332,11 @@ expected_schema_1 = {
         '/B/consumer-path/::method_3': {
             'get': {
                 'operationId': 'method_3_receive_3',
-                'requestBody': None,
                 'summary': 'method_3 summary',
                 'description': 'method_3 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_3\xa0\xa0\xa0200': {
+                    '200': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -357,12 +350,11 @@ expected_schema_1 = {
         '/B/consumer-path/::method_4': {
             'get': {
                 'operationId': 'method_4_receive_3',
-                'requestBody': None,
                 'summary': 'method_4 summary',
                 'description': 'method_4 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_4\xa0\xa0\xa0201': {
+                    '201': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -370,7 +362,7 @@ expected_schema_1 = {
                         },
                         'description': '',
                     },
-                    'method_4\xa0\xa0\xa0400': {
+                    '400': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -393,7 +385,7 @@ expected_schema_1 = {
                 'description': 'method_1 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_1\xa0\xa0\xa0200': {
+                    '200': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -416,7 +408,7 @@ expected_schema_1 = {
                 'description': 'method_2 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_2\xa0\xa0\xa0201': {
+                    '201': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -424,7 +416,7 @@ expected_schema_1 = {
                         },
                         'description': '',
                     },
-                    'method_2\xa0\xa0\xa0400': {
+                    '400': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -438,12 +430,11 @@ expected_schema_1 = {
         '/A/AA/consumer-path/::method_3': {
             'get': {
                 'operationId': 'method_3_receive',
-                'requestBody': None,
                 'summary': 'method_3 summary',
                 'description': 'method_3 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_3\xa0\xa0\xa0200': {
+                    '200': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -457,12 +448,11 @@ expected_schema_1 = {
         '/A/AA/consumer-path/::method_4': {
             'get': {
                 'operationId': 'method_4_receive',
-                'requestBody': None,
                 'summary': 'method_4 summary',
                 'description': 'method_4 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_4\xa0\xa0\xa0201': {
+                    '201': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -470,7 +460,7 @@ expected_schema_1 = {
                         },
                         'description': '',
                     },
-                    'method_4\xa0\xa0\xa0400': {
+                    '400': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -493,7 +483,7 @@ expected_schema_1 = {
                 'description': 'method_1 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_1\xa0\xa0\xa0200': {
+                    '200': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -516,7 +506,7 @@ expected_schema_1 = {
                 'description': 'method_2 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_2\xa0\xa0\xa0201': {
+                    '201': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -524,7 +514,7 @@ expected_schema_1 = {
                         },
                         'description': '',
                     },
-                    'method_2\xa0\xa0\xa0400': {
+                    '400': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
@@ -538,12 +528,11 @@ expected_schema_1 = {
         '/A/AB/AAA/consumer-path/::method_3': {
             'get': {
                 'operationId': 'method_3_receive_2',
-                'requestBody': None,
                 'summary': 'method_3 summary',
                 'description': 'method_3 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_3\xa0\xa0\xa0200': {
+                    '200': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -557,12 +546,11 @@ expected_schema_1 = {
         '/A/AB/AAA/consumer-path/::method_4': {
             'get': {
                 'operationId': 'method_4_receive_2',
-                'requestBody': None,
                 'summary': 'method_4 summary',
                 'description': 'method_4 description',
                 'tags': ['web_socket'],
                 'responses': {
-                    'method_4\xa0\xa0\xa0201': {
+                    '201': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/OutputSerializer'}
@@ -570,7 +558,7 @@ expected_schema_1 = {
                         },
                         'description': '',
                     },
-                    'method_4\xa0\xa0\xa0400': {
+                    '400': {
                         'content': {
                             'application/json': {
                                 'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
