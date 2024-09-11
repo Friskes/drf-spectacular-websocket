@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from typing import TYPE_CHECKING, Any
 
 from channels.consumer import AsyncConsumer
@@ -103,19 +104,24 @@ class WsSchemaGenerator(SchemaGenerator):
 
             action_schema = self.get_action_schema(method=method)
 
+            endpoint_data = {
+                'operationId': f'{event}_{action_schema.get_operation_id()}',
+                'summary': action_schema.get_summary(),
+                'description': action_schema.get_description(),
+                'tags': action_schema.get_tags(),
+                'responses': action_schema.get_response_bodies(
+                    action_schema.get_response_serializers(),
+                ),
+            }
+            request_body = action_schema.get_request_body(
+                serializer=action_schema.get_request_serializer()
+            )
+            # fixed: "SchemaValidationError: None is not valid under any of the given schemas"
+            if request_body is not None:
+                endpoint_data.update({'requestBody': request_body})
+
             consumer_endpoints[f'{path}::{event}'] = {
-                self.ws_to_http_method[action_schema.method]: {
-                    'operationId': f'{event}_{action_schema.get_operation_id()}',
-                    'requestBody': action_schema.get_request_body(
-                        serializer=action_schema.get_request_serializer(),
-                    ),
-                    'summary': action_schema.get_summary(),
-                    'description': action_schema.get_description(),
-                    'tags': action_schema.get_tags(),
-                    'responses': action_schema.get_response_bodies(
-                        action_schema.get_response_serializers(),
-                    ),
-                }
+                self.ws_to_http_method[action_schema.method]: endpoint_data
             }
 
         return consumer_endpoints
@@ -124,7 +130,12 @@ class WsSchemaGenerator(SchemaGenerator):
     def _get_extended_methods_list(consumer: AsyncConsumer) -> list[Callable[..., Any]]:
         methods_list = []
         for attr in dir(consumer):
-            method = getattr(consumer, attr)
+            #
+            with warnings.catch_warnings():
+                warnings.simplefilter('ignore', RuntimeWarning)
+
+                method = getattr(consumer, attr)
+
             if callable(method) and hasattr(method, 'kwargs'):
                 methods_list.append(method)
         return methods_list
