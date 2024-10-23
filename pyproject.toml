@@ -33,7 +33,7 @@ dependencies = [
     "django>=4.0.0",
     "djangorestframework>=3.14.0",
     "drf-spectacular>=0.27.2",
-    "drf-spectacular-sidecar>=2024.4.1",
+    "drf-spectacular-sidecar==2024.4.1",
     "channels>=4.0.0",
 ]
 
