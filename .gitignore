@@ -17,3 +17,4 @@ trash
 .mypy_cache
 .coverage
 htmlcov
+.vscode

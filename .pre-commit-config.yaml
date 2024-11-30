@@ -3,18 +3,11 @@
 # https://docs.astral.sh/ruff/integrations/
 # https://pre-commit.com/
 
-# Commands:
-#   pre-commit run  # Запустить pre-commit проверку для теста
-#   pre-commit install  # Создать файл в директории .git/hooks/pre-commit
-
-# После создания файла, при любом git commit будет запускаться pre-commit проверка.
-
-# Если возникли проблемы с pre-commit и нужно срочно сделать commit то можно
-# временно удалить проверку до выяснения проблемы с помощью:
-#   pre-commit uninstall
-
-# Либо можно воспользоваться флагом при коммите (--no-verify или -n):
-# git commit --no-verify -m "msg"
+# How to use it?
+#   pre-commit run  # Run the pre-commit check manually.
+#   pre-commit install  # Create a file in the directory to run automatically on commit: .git/hooks/pre-commit
+#   pre-commit uninstall  # Delete a file in the directory to disable automatic startup on commit.
+#   git commit --no-verify -m "msg"  # Disable startup for this commit (--no-verify OR -n)
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -36,10 +29,10 @@ repos:
           - tomli
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 'v0.4.1'
+    rev: 'v0.8.0'
     hooks:
       - id: ruff
-        name: Проверка кода ruff линтером.
+        name: Check the codebase using the ruff linter.
         args: [
           --fix,
           --quiet,
@@ -47,4 +40,4 @@ repos:
         ]
 
       - id: ruff-format
-        name: Проверка кода ruff форматтером.
+        name: Check the codebase using the ruff formatter.
