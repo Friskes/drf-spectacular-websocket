@@ -65,7 +65,7 @@ function makeSocket(socketActions, path) {
     socketActions.setStatus({path, status: "closed"})
     setTimeout(() => {
       makeSocket(socketActions, path)
-    }, 3000)  // задержка перед переподключением WS
+    }, 3000)  // delay before reconnecting WS
   }
 
   socket.onerror = () => {
@@ -264,8 +264,10 @@ const socketEventsPlugin = function (system) {
         const activeMediaType = response.getIn(["content", "application/json"])
         // const activeMediaType = response.getIn(["application/json"])
 
+        const schema = null ? (activeMediaType === undefined) : activeMediaType.get("schema");
+
         const sampleResponse = fn.getSampleSchema(
-          activeMediaType.get("schema"),
+          schema,
           "application/json",
           {"includeWriteOnly": true, "includeReadOnly": true},
         )
@@ -309,7 +311,7 @@ const socketEventsPlugin = function (system) {
 
         let td_element = null
         if (method === "post") {
-            td_element = React.createElement("td", {class: "col_header response-col_event"}, "Action name")
+            td_element = React.createElement("td", {class: "col_header response-col_event"}, "Status Code")
         }
 
         const table = React.createElement("table", {

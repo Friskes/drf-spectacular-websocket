@@ -51,3 +51,38 @@ class Consumer(JsonWebsocketConsumer):
     )
     def method_4(self) -> None:
         pass
+
+    @extend_ws_schema(
+        type='send',
+        summary='method_5 summary',
+        description='method_5 description',
+        request=InputSerializer,
+        responses=None,
+    )
+    def method_5(self) -> None:
+        pass
+
+    @extend_ws_schema(
+        type='send',
+        summary='method_6 summary',
+        description='method_6 description',
+        request=InputSerializer,
+        responses={
+            status.HTTP_201_CREATED: None,
+        },
+    )
+    def method_6(self) -> None:
+        pass
+
+    @extend_ws_schema(
+        type='send',
+        summary='method_7 summary',
+        description='method_7 description',
+        request=InputSerializer,
+        responses={
+            status.HTTP_201_CREATED: None,
+            status.HTTP_400_BAD_REQUEST: BadOutputSerializer,
+        },
+    )
+    def method_7(self) -> None:
+        pass

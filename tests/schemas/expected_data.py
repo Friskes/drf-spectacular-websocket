@@ -2,11 +2,6 @@ expected_router_schema1 = {
     '/B/consumer-path/::method_1': {
         'post': {
             'operationId': 'method_1_send',
-            'requestBody': {
-                'content': {
-                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
-                }
-            },
             'summary': 'method_1 summary',
             'description': 'method_1 description',
             'tags': ['web_socket'],
@@ -18,16 +13,16 @@ expected_router_schema1 = {
                     'description': '',
                 }
             },
-        }
-    },
-    '/B/consumer-path/::method_2': {
-        'post': {
-            'operationId': 'method_2_send',
             'requestBody': {
                 'content': {
                     'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
                 }
             },
+        }
+    },
+    '/B/consumer-path/::method_2': {
+        'post': {
+            'operationId': 'method_2_send',
             'summary': 'method_2 summary',
             'description': 'method_2 description',
             'tags': ['web_socket'],
@@ -46,6 +41,11 @@ expected_router_schema1 = {
                     },
                     'description': '',
                 },
+            },
+            'requestBody': {
+                'content': {
+                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                }
             },
         }
     },
@@ -89,14 +89,60 @@ expected_router_schema1 = {
             },
         }
     },
-    '/A/AA/consumer-path/::method_1': {
+    '/B/consumer-path/::method_5': {
         'post': {
-            'operationId': 'method_1_send',
+            'operationId': 'method_5_send',
+            'summary': 'method_5 summary',
+            'description': 'method_5 description',
+            'tags': ['web_socket'],
+            'responses': None,
             'requestBody': {
                 'content': {
                     'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
                 }
             },
+        }
+    },
+    '/B/consumer-path/::method_6': {
+        'post': {
+            'operationId': 'method_6_send',
+            'summary': 'method_6 summary',
+            'description': 'method_6 description',
+            'tags': ['web_socket'],
+            'responses': None,
+            'requestBody': {
+                'content': {
+                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                }
+            },
+        }
+    },
+    '/B/consumer-path/::method_7': {
+        'post': {
+            'operationId': 'method_7_send',
+            'summary': 'method_7 summary',
+            'description': 'method_7 description',
+            'tags': ['web_socket'],
+            'responses': {
+                '400': {
+                    'content': {
+                        'application/json': {
+                            'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
+                        }
+                    },
+                    'description': '',
+                }
+            },
+            'requestBody': {
+                'content': {
+                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                }
+            },
+        }
+    },
+    '/A/AA/consumer-path/::method_1': {
+        'post': {
+            'operationId': 'method_1_send',
             'summary': 'method_1 summary',
             'description': 'method_1 description',
             'tags': ['web_socket'],
@@ -108,16 +154,16 @@ expected_router_schema1 = {
                     'description': '',
                 }
             },
-        }
-    },
-    '/A/AA/consumer-path/::method_2': {
-        'post': {
-            'operationId': 'method_2_send',
             'requestBody': {
                 'content': {
                     'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
                 }
             },
+        }
+    },
+    '/A/AA/consumer-path/::method_2': {
+        'post': {
+            'operationId': 'method_2_send',
             'summary': 'method_2 summary',
             'description': 'method_2 description',
             'tags': ['web_socket'],
@@ -136,6 +182,11 @@ expected_router_schema1 = {
                     },
                     'description': '',
                 },
+            },
+            'requestBody': {
+                'content': {
+                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                }
             },
         }
     },
@@ -179,14 +230,60 @@ expected_router_schema1 = {
             },
         }
     },
-    '/A/AB/AAA/consumer-path/::method_1': {
+    '/A/AA/consumer-path/::method_5': {
         'post': {
-            'operationId': 'method_1_send',
+            'operationId': 'method_5_send',
+            'summary': 'method_5 summary',
+            'description': 'method_5 description',
+            'tags': ['web_socket'],
+            'responses': None,
             'requestBody': {
                 'content': {
                     'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
                 }
             },
+        }
+    },
+    '/A/AA/consumer-path/::method_6': {
+        'post': {
+            'operationId': 'method_6_send',
+            'summary': 'method_6 summary',
+            'description': 'method_6 description',
+            'tags': ['web_socket'],
+            'responses': None,
+            'requestBody': {
+                'content': {
+                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                }
+            },
+        }
+    },
+    '/A/AA/consumer-path/::method_7': {
+        'post': {
+            'operationId': 'method_7_send',
+            'summary': 'method_7 summary',
+            'description': 'method_7 description',
+            'tags': ['web_socket'],
+            'responses': {
+                '400': {
+                    'content': {
+                        'application/json': {
+                            'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
+                        }
+                    },
+                    'description': '',
+                }
+            },
+            'requestBody': {
+                'content': {
+                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                }
+            },
+        }
+    },
+    '/A/AB/AAA/consumer-path/::method_1': {
+        'post': {
+            'operationId': 'method_1_send',
             'summary': 'method_1 summary',
             'description': 'method_1 description',
             'tags': ['web_socket'],
@@ -198,16 +295,16 @@ expected_router_schema1 = {
                     'description': '',
                 }
             },
-        }
-    },
-    '/A/AB/AAA/consumer-path/::method_2': {
-        'post': {
-            'operationId': 'method_2_send',
             'requestBody': {
                 'content': {
                     'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
                 }
             },
+        }
+    },
+    '/A/AB/AAA/consumer-path/::method_2': {
+        'post': {
+            'operationId': 'method_2_send',
             'summary': 'method_2 summary',
             'description': 'method_2 description',
             'tags': ['web_socket'],
@@ -226,6 +323,11 @@ expected_router_schema1 = {
                     },
                     'description': '',
                 },
+            },
+            'requestBody': {
+                'content': {
+                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                }
             },
         }
     },
@@ -269,6 +371,57 @@ expected_router_schema1 = {
             },
         }
     },
+    '/A/AB/AAA/consumer-path/::method_5': {
+        'post': {
+            'operationId': 'method_5_send',
+            'summary': 'method_5 summary',
+            'description': 'method_5 description',
+            'tags': ['web_socket'],
+            'responses': None,
+            'requestBody': {
+                'content': {
+                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                }
+            },
+        }
+    },
+    '/A/AB/AAA/consumer-path/::method_6': {
+        'post': {
+            'operationId': 'method_6_send',
+            'summary': 'method_6 summary',
+            'description': 'method_6 description',
+            'tags': ['web_socket'],
+            'responses': None,
+            'requestBody': {
+                'content': {
+                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                }
+            },
+        }
+    },
+    '/A/AB/AAA/consumer-path/::method_7': {
+        'post': {
+            'operationId': 'method_7_send',
+            'summary': 'method_7 summary',
+            'description': 'method_7 description',
+            'tags': ['web_socket'],
+            'responses': {
+                '400': {
+                    'content': {
+                        'application/json': {
+                            'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
+                        }
+                    },
+                    'description': '',
+                }
+            },
+            'requestBody': {
+                'content': {
+                    'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                }
+            },
+        }
+    },
 }
 
 expected_schema_1 = {
@@ -278,11 +431,6 @@ expected_schema_1 = {
         '/B/consumer-path/::method_1': {
             'post': {
                 'operationId': 'method_1_send_3',
-                'requestBody': {
-                    'content': {
-                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
-                    }
-                },
                 'summary': 'method_1 summary',
                 'description': 'method_1 description',
                 'tags': ['web_socket'],
@@ -296,16 +444,16 @@ expected_schema_1 = {
                         'description': '',
                     }
                 },
-            }
-        },
-        '/B/consumer-path/::method_2': {
-            'post': {
-                'operationId': 'method_2_send_3',
                 'requestBody': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
                     }
                 },
+            }
+        },
+        '/B/consumer-path/::method_2': {
+            'post': {
+                'operationId': 'method_2_send_3',
                 'summary': 'method_2 summary',
                 'description': 'method_2 description',
                 'tags': ['web_socket'],
@@ -326,6 +474,11 @@ expected_schema_1 = {
                         },
                         'description': '',
                     },
+                },
+                'requestBody': {
+                    'content': {
+                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                    }
                 },
             }
         },
@@ -373,14 +526,60 @@ expected_schema_1 = {
                 },
             }
         },
-        '/A/AA/consumer-path/::method_1': {
+        '/B/consumer-path/::method_5': {
             'post': {
-                'operationId': 'method_1_send',
+                'operationId': 'method_5_send_3',
+                'summary': 'method_5 summary',
+                'description': 'method_5 description',
+                'tags': ['web_socket'],
+                'responses': None,
                 'requestBody': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
                     }
                 },
+            }
+        },
+        '/B/consumer-path/::method_6': {
+            'post': {
+                'operationId': 'method_6_send_3',
+                'summary': 'method_6 summary',
+                'description': 'method_6 description',
+                'tags': ['web_socket'],
+                'responses': None,
+                'requestBody': {
+                    'content': {
+                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                    }
+                },
+            }
+        },
+        '/B/consumer-path/::method_7': {
+            'post': {
+                'operationId': 'method_7_send_3',
+                'summary': 'method_7 summary',
+                'description': 'method_7 description',
+                'tags': ['web_socket'],
+                'responses': {
+                    '400': {
+                        'content': {
+                            'application/json': {
+                                'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
+                            }
+                        },
+                        'description': '',
+                    }
+                },
+                'requestBody': {
+                    'content': {
+                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                    }
+                },
+            }
+        },
+        '/A/AA/consumer-path/::method_1': {
+            'post': {
+                'operationId': 'method_1_send',
                 'summary': 'method_1 summary',
                 'description': 'method_1 description',
                 'tags': ['web_socket'],
@@ -394,16 +593,16 @@ expected_schema_1 = {
                         'description': '',
                     }
                 },
-            }
-        },
-        '/A/AA/consumer-path/::method_2': {
-            'post': {
-                'operationId': 'method_2_send',
                 'requestBody': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
                     }
                 },
+            }
+        },
+        '/A/AA/consumer-path/::method_2': {
+            'post': {
+                'operationId': 'method_2_send',
                 'summary': 'method_2 summary',
                 'description': 'method_2 description',
                 'tags': ['web_socket'],
@@ -424,6 +623,11 @@ expected_schema_1 = {
                         },
                         'description': '',
                     },
+                },
+                'requestBody': {
+                    'content': {
+                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                    }
                 },
             }
         },
@@ -471,14 +675,60 @@ expected_schema_1 = {
                 },
             }
         },
-        '/A/AB/AAA/consumer-path/::method_1': {
+        '/A/AA/consumer-path/::method_5': {
             'post': {
-                'operationId': 'method_1_send_2',
+                'operationId': 'method_5_send',
+                'summary': 'method_5 summary',
+                'description': 'method_5 description',
+                'tags': ['web_socket'],
+                'responses': None,
                 'requestBody': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
                     }
                 },
+            }
+        },
+        '/A/AA/consumer-path/::method_6': {
+            'post': {
+                'operationId': 'method_6_send',
+                'summary': 'method_6 summary',
+                'description': 'method_6 description',
+                'tags': ['web_socket'],
+                'responses': None,
+                'requestBody': {
+                    'content': {
+                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                    }
+                },
+            }
+        },
+        '/A/AA/consumer-path/::method_7': {
+            'post': {
+                'operationId': 'method_7_send',
+                'summary': 'method_7 summary',
+                'description': 'method_7 description',
+                'tags': ['web_socket'],
+                'responses': {
+                    '400': {
+                        'content': {
+                            'application/json': {
+                                'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
+                            }
+                        },
+                        'description': '',
+                    }
+                },
+                'requestBody': {
+                    'content': {
+                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                    }
+                },
+            }
+        },
+        '/A/AB/AAA/consumer-path/::method_1': {
+            'post': {
+                'operationId': 'method_1_send_2',
                 'summary': 'method_1 summary',
                 'description': 'method_1 description',
                 'tags': ['web_socket'],
@@ -492,16 +742,16 @@ expected_schema_1 = {
                         'description': '',
                     }
                 },
-            }
-        },
-        '/A/AB/AAA/consumer-path/::method_2': {
-            'post': {
-                'operationId': 'method_2_send_2',
                 'requestBody': {
                     'content': {
                         'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
                     }
                 },
+            }
+        },
+        '/A/AB/AAA/consumer-path/::method_2': {
+            'post': {
+                'operationId': 'method_2_send_2',
                 'summary': 'method_2 summary',
                 'description': 'method_2 description',
                 'tags': ['web_socket'],
@@ -522,6 +772,11 @@ expected_schema_1 = {
                         },
                         'description': '',
                     },
+                },
+                'requestBody': {
+                    'content': {
+                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                    }
                 },
             }
         },
@@ -566,6 +821,57 @@ expected_schema_1 = {
                         },
                         'description': '',
                     },
+                },
+            }
+        },
+        '/A/AB/AAA/consumer-path/::method_5': {
+            'post': {
+                'operationId': 'method_5_send_2',
+                'summary': 'method_5 summary',
+                'description': 'method_5 description',
+                'tags': ['web_socket'],
+                'responses': None,
+                'requestBody': {
+                    'content': {
+                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                    }
+                },
+            }
+        },
+        '/A/AB/AAA/consumer-path/::method_6': {
+            'post': {
+                'operationId': 'method_6_send_2',
+                'summary': 'method_6 summary',
+                'description': 'method_6 description',
+                'tags': ['web_socket'],
+                'responses': None,
+                'requestBody': {
+                    'content': {
+                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                    }
+                },
+            }
+        },
+        '/A/AB/AAA/consumer-path/::method_7': {
+            'post': {
+                'operationId': 'method_7_send_2',
+                'summary': 'method_7 summary',
+                'description': 'method_7 description',
+                'tags': ['web_socket'],
+                'responses': {
+                    '400': {
+                        'content': {
+                            'application/json': {
+                                'schema': {'$ref': '#/components/schemas/BadOutputSerializer'}
+                            }
+                        },
+                        'description': '',
+                    }
+                },
+                'requestBody': {
+                    'content': {
+                        'application/json': {'schema': {'$ref': '#/components/schemas/InputSerializer'}}
+                    }
                 },
             }
         },

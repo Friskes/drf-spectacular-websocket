@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
+from drf_spectacular.drainage import warn as spectacular_warn
 from drf_spectacular.openapi import AutoSchema
 from drf_spectacular.plumbing import (
     build_media_type_object,
@@ -102,10 +103,19 @@ class ConsumerAutoSchema(AutoSchema):
             return None
 
         if isinstance(response_serializers, dict):
-            return {
-                f'{code}': self._get_response_for_code(force_instance(serializer), code)
-                for code, serializer in response_serializers.items()
-            }
+            schemas = {}
+            for code, serializer in response_serializers.items():
+                if not serializer:
+                    spectacular_warn(
+                        'response={%s: %s} was skipped because the value %s '
+                        'is invalid for the response code.' % (code, serializer, serializer)
+                    )
+                    continue
+
+                schema = {f'{code}': self._get_response_for_code(force_instance(serializer), code)}
+                schemas.update(schema)
+
+            return schemas or None
 
         serializers_ = self._force_ws_serializer(
             serializer=response_serializers, serializer_type='response', direction='receive'
